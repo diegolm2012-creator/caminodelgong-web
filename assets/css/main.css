@@ -1,0 +1,144 @@
+/* === Camino del Gong — Main Stylesheet === */
+/* Voz pública v2: sobria, tibetana, humilde. Sin precios. */
+
+:root {
+  --color-bg: #faf7f2;
+  --color-text: #2c2416;
+  --color-accent: #8b6914;
+  --color-alt-bg: #f0ece4;
+  --color-footer: #2c2416;
+  --color-light: #e8ddd0;
+  --font-body: Georgia, 'Times New Roman', serif;
+  --font-heading: 'Palatino', 'Palatino Linotype', serif;
+  --spacing: 2rem;
+  --max-width: 900px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.7;
+  font-size: 1.0625rem;
+}
+
+.container { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; }
+
+/* Hero */
+.hero {
+  background: var(--color-alt-bg);
+  padding: 6rem 1.5rem 4rem;
+  text-align: center;
+  border-bottom: 1px solid var(--color-light);
+}
+
+.hero__content { max-width: 600px; margin: 0 auto; }
+
+.hero h1 {
+  font-family: var(--font-heading);
+  font-size: 2.8rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: var(--color-text);
+  margin-bottom: 0.75rem;
+}
+
+.hero__subtitle {
+  font-size: 1.15rem;
+  font-style: italic;
+  color: #5a4c3a;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.hero__byline {
+  font-size: 0.9rem;
+  color: #8a7a66;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Sections */
+.section { padding: 4rem 0; }
+.section--alt { background: var(--color-alt-bg); }
+
+.section h2 {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 400;
+  color: var(--color-accent);
+  margin-bottom: 1.5rem;
+  text-align: center;
+  letter-spacing: 0.03em;
+}
+
+.section p {
+  margin-bottom: 1rem;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Grid cards */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-light);
+  padding: 2rem;
+  border-radius: 4px;
+}
+
+.card h3 {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--color-accent);
+  margin-bottom: 0.75rem;
+}
+
+.card p {
+  font-size: 0.95rem;
+  color: #4a4035;
+  max-width: none;
+  margin: 0;
+}
+
+/* Contact */
+#contacto { text-align: center; }
+.contact-email {
+  font-size: 1.2rem;
+  margin: 1rem 0;
+}
+.contact-email a {
+  color: var(--color-accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+.contact-email a:hover { border-color: var(--color-accent); }
+.contact-note { font-style: italic; color: #8a7a66; font-size: 0.95rem; }
+
+/* Footer */
+.footer {
+  background: var(--color-footer);
+  color: #ccc6bb;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 600px) {
+  .hero h1 { font-size: 2rem; }
+  .section { padding: 3rem 0; }
+  .grid { grid-template-columns: 1fr; }
+}
