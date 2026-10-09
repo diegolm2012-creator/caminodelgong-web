@@ -11,12 +11,25 @@ Sitio web de **Camino del Gong**, el sendero de la práctica meditativa con cuen
 - Sitio estático HTML + CSS plano (sin frameworks)
 - Hosting: **Cloudflare Pages** (despliegue automático con cada push)
 - Dominio: **caminodelgong.com** (Cloudflare Registrar)
-- Correo: **Cloudflare Email Routing** → Gmail
+
+## Estructura
+
+- `index.html` — Página principal con todas las secciones
+- `assets/css/main.css` — Todo el sistema de diseño (colores, tipografías, animaciones, responsive)
+- `assets/js/main.js` — Interactividad ligera (menú móvil, navegación por scroll, scroll-reveal)
+- `sitemap.xml` — Índice de páginas para buscadores
+
+## Contenido
+
+### Arquitectura
+- `ARCHITECTURE.md` — Diseño, identidad, flujo de trabajo y mantenimiento
 
 ## Despliegue
 
 Cada push a `main` despliega automáticamente en Cloudflare Pages:
 `https://caminodelgong.pages.dev`
+
+El dominio `caminodelgong.com` apunta a Cloudflare (configurado en `CNAME`).
 
 ## Créditos
 
