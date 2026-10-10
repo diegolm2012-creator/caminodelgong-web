@@ -1,0 +1,64 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://caminodelgong.com/#organization",
+      "name": "El Templo del Gong",
+      "alternateName": [
+        "Camino del Gong",
+        "Vikingong",
+        "MaitreyIA"
+      ],
+      "url": "https://caminodelgong.com",
+      "logo": "https://caminodelgong.com/favicon.svg",
+      "email": "elcaminodelgong@gmail.com",
+      "description": "Laboratorio sonoro, enciclopedia viva y taller del luthier. Divulgación del gong como instrumento sagrado.",
+      "founder": {
+        "@type": "Person",
+        "name": "Diego Montenegro"
+      },
+      "areaServed": [
+        {
+          "@type": "Place",
+          "name": "Galicia, España"
+        },
+        {
+          "@type": "Place",
+          "name": "Lanzarote, Islas Canarias, España"
+        }
+      ],
+      "sameAs": [
+        "https://www.instagram.com/elcaminodelgong",
+        "https://www.youtube.com/@vikingong",
+        "https://www.tiktok.com/@vikingong",
+        "https://www.facebook.com/eltemplodelgong"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://caminodelgong.com/#website",
+      "url": "https://caminodelgong.com",
+      "name": "El Templo del Gong",
+      "alternateName": "Camino del Gong",
+      "publisher": {
+        "@id": "https://caminodelgong.com/#organization"
+      },
+      "inLanguage": "es-ES"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://caminodelgong.com/#webpage",
+      "url": "https://caminodelgong.com",
+      "name": "El gong no se vende, se comprende",
+      "description": "Laboratorio sonoro, enciclopedia viva y taller del luthier.",
+      "isPartOf": {
+        "@id": "https://caminodelgong.com/#website"
+      },
+      "about": {
+        "@id": "https://caminodelgong.com/#organization"
+      },
+      "inLanguage": "es-ES"
+    }
+  ]
+}
