@@ -368,7 +368,10 @@ nav {
   text-align: center;
   position: relative;
   overflow: hidden;
-  background: radial-gradient(ellipse at 50% 45%, rgba(201, 168, 76, 0.04) 0%, transparent 70%);
+  /* Luz rasante desde arriba: claridad que baja como el sol sobre el frontón */
+  background:
+    linear-gradient(180deg, rgba(201, 168, 76, 0.07) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 40%, rgba(201, 168, 76, 0.05) 0%, transparent 70%);
 }
 
 .hero::before {
@@ -416,6 +419,9 @@ nav {
   margin-bottom: 1.25rem;
   letter-spacing: -0.015em;
   line-height: 1.05;
+  max-width: 15ch;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .hero-subtitle {
@@ -492,10 +498,19 @@ nav {
 /* ═══════════════════════════════════════════════════════════
    CARDS (reutilizables)
    ═══════════════════════════════════════════════════════════ */
+/* Retícula con hueco central = nave del templo (evoca columnata, no la dibuja).
+   Proporción áurea: laterales 1fr, centro 1.618fr. */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: 1fr 1.618fr 1fr;
   gap: 2rem;
+  align-items: stretch;
+}
+
+/* La tarjeta central ocupa el eje; las laterales flanquean como columnas implícitas */
+.card-grid > .card:nth-child(3n + 2) {
+  border-color: var(--border-accent);
+  background: linear-gradient(180deg, var(--bg-card), var(--bg-elevated));
 }
 
 .card {
