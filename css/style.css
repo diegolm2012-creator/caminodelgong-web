@@ -1,29 +1,76 @@
 /* ═══════════════════════════════════════════════════════════
-   El Templo del Gong — Sistema de diseño v2.0
-   4 marcas · un solo sistema visual
-   Atmósfera: profunda · sonora · artesanal
+   El Templo del Gong — Sistema de diseño v3.0
+   Dirección de arte: armonía, atractivo, identificación clara
+   Templo griego en la estructura, laboratorio NASA en el detalle
    ═══════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap');
 
 :root {
   --bg-deepest: #0a0a0b;
-  --bg-panel: #141518;
-  --bg-card: #1e2028;
-  --bg-elevated: #282a33;
-  --text-primary: #e8e6e3;
-  --text-secondary: #9ca3af;
-  --text-tertiary: #5c6470;
+  --bg-panel: #121316;
+  --bg-card: #1a1c22;
+  --bg-elevated: #22242c;
+  --bg-overlay: rgba(10, 10, 11, 0.85);
+  --text-primary: #ece9e4;
+  --text-secondary: #a8adb8;
+  --text-tertiary: #6b7280;
+  --text-muted: #4b5563;
   --accent-gold: #c9a84c;
   --accent-copper: #b87333;
   --accent-glow: #d4a543;
-  --border-subtle: rgba(255, 255, 255, 0.06);
-  --border-visible: rgba(255, 255, 255, 0.12);
-  --shadow-elevation: rgba(20, 20, 50, 0.3);
-  --font-display: 'Georgia', 'Times New Roman', serif;
-  --font-body: 'Georgia', 'Palatino', serif;
-  --transition-slow: 600ms ease;
-  --transition-fast: 300ms ease;
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-visible: rgba(255, 255, 255, 0.1);
+  --border-accent: rgba(201, 168, 76, 0.3);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 40px rgba(201, 168, 76, 0.08);
+  --font-display: 'Fraunces', 'Georgia', 'Times New Roman', serif;
+  --font-body: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'SF Mono', 'Consolas', 'Monaco', monospace;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-md: 1.125rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 1.875rem;
+  --text-3xl: 2.25rem;
+  --text-4xl: 3rem;
+  --text-5xl: 3.75rem;
+  --text-6xl: 4.5rem;
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --space-4xl: 6rem;
   --max-width: 1200px;
-  --nav-height: 64px;
+  --nav-height: 72px;
+  --border-radius: 8px;
+  --border-radius-lg: 12px;
+  --transition-fast: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  --templo-accent: #c9a84c;
+  --templo-accent-soft: rgba(201, 168, 76, 0.12);
+  --templo-glow: rgba(201, 168, 76, 0.15);
+  --templo-symbol: '\u25ef';
+  --camino-accent: #c47a4a;
+  --camino-accent-soft: rgba(196, 122, 74, 0.12);
+  --camino-glow: rgba(196, 122, 74, 0.15);
+  --camino-symbol: '\u25c8';
+  --taller-accent: #a07850;
+  --taller-accent-soft: rgba(160, 120, 80, 0.12);
+  --taller-glow: rgba(160, 120, 80, 0.15);
+  --taller-symbol: '\u2b21';
+  --maitreyia-accent: #7a9cc4;
+  --maitreyia-accent-soft: rgba(122, 156, 196, 0.12);
+  --maitreyia-glow: rgba(122, 156, 196, 0.15);
+  --maitreyia-symbol: '\u25c7';
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -68,28 +115,33 @@ body {
 /* ═══════════════════════════════════════════════════════════
    TYPOGRAPHY
    ═══════════════════════════════════════════════════════════ */
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   font-weight: 400;
-  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
 }
 
 h1 {
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  line-height: 1.1;
-  color: var(--text-primary);
+  font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+  line-height: 1.08;
 }
 
 h2 {
-  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
-  line-height: 1.2;
-  color: var(--text-primary);
+  font-size: clamp(var(--text-2xl), 3.5vw, var(--text-4xl));
+  line-height: 1.15;
 }
 
 h3 {
-  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-size: clamp(var(--text-lg), 2.5vw, var(--text-2xl));
+  line-height: 1.25;
+  color: var(--text-primary);
+}
+
+h4 {
+  font-size: var(--text-lg);
   line-height: 1.3;
-  color: var(--text-secondary);
 }
 
 p {
@@ -142,10 +194,10 @@ nav {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: var(--bg-panel);
+  background: var(--bg-overlay);
   border-bottom: 1px solid var(--border-subtle);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
 }
 
 .nav-inner {
@@ -168,28 +220,35 @@ nav {
 
 .nav-links {
   display: flex;
-  gap: 2rem;
+  gap: 0.5rem;
   list-style: none;
   align-items: center;
 }
 
 .nav-links a {
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   color: var(--text-secondary);
   border-bottom: none;
   transition: color var(--transition-fast);
   position: relative;
+  padding: 8px 14px;
+  border-radius: var(--border-radius);
+  font-weight: 400;
+  letter-spacing: 0.01em;
 }
 
 .nav-links a::after {
   content: '';
   position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 1px;
+  bottom: 4px;
+  left: 14px;
+  right: 14px;
+  height: 2px;
   background: var(--accent-gold);
-  transition: width var(--transition-fast);
+  transition: transform var(--transition-fast);
+  transform: scaleX(0);
+  transform-origin: left;
+  border-radius: 1px;
 }
 
 .nav-links a:hover,
@@ -199,7 +258,11 @@ nav {
 
 .nav-links a:hover::after,
 .nav-links a.active::after {
-  width: 100%;
+  transform: scaleX(1);
+}
+
+.nav-links a.active {
+  background: rgba(201, 168, 76, 0.08);
 }
 
 .nav-toggle {
@@ -317,67 +380,90 @@ nav {
 }
 
 .hero-symbol {
-  width: 180px;
-  height: 180px;
-  margin: 0 auto 2rem;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 2.5rem;
   border-radius: 50%;
-  background: radial-gradient(circle at 40% 40%, var(--accent-gold), var(--accent-copper) 60%, transparent 100%);
+  background: radial-gradient(circle at 35% 35%, var(--accent-gold), var(--accent-copper) 55%, transparent 100%);
   box-shadow:
-    0 0 60px rgba(201, 168, 76, 0.15),
-    0 0 120px rgba(184, 115, 51, 0.08),
-    inset 0 0 30px rgba(255, 255, 255, 0.05);
+    0 0 80px rgba(201, 168, 76, 0.12),
+    0 0 160px rgba(184, 115, 51, 0.06),
+    inset 0 0 40px rgba(255, 255, 255, 0.04);
   position: relative;
   animation: gong-pulse 8s ease-in-out infinite;
 }
 
 .hero-symbol::after {
-  content: '◯';
+  content: '\u25ef';
   position: absolute;
-  inset: 20%;
+  inset: 15%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--bg-deepest);
-  font-size: 5rem;
-  opacity: 0.3;
+  font-size: 6rem;
+  opacity: 0.25;
+  font-family: var(--font-display);
 }
 
 @keyframes gong-pulse {
-  0%, 100% { transform: scale(1); box-shadow: 0 0 60px rgba(201, 168, 76, 0.15), 0 0 120px rgba(184, 115, 51, 0.08); }
-  50% { transform: scale(1.02); box-shadow: 0 0 80px rgba(201, 168, 76, 0.2), 0 0 160px rgba(184, 115, 51, 0.12); }
+  0%, 100% { transform: scale(1); box-shadow: 0 0 80px rgba(201, 168, 76, 0.12), 0 0 160px rgba(184, 115, 51, 0.06); }
+  50% { transform: scale(1.015); box-shadow: 0 0 100px rgba(201, 168, 76, 0.16), 0 0 200px rgba(184, 115, 51, 0.08); }
 }
 
 .hero-title {
-  font-size: clamp(1.8rem, 4vw, 3rem);
-  margin-bottom: 1rem;
-  letter-spacing: 0.01em;
+  font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.015em;
+  line-height: 1.05;
 }
 
 .hero-subtitle {
-  font-size: clamp(1rem, 2vw, 1.3rem);
+  font-size: clamp(var(--text-md), 2vw, var(--text-xl));
   color: var(--text-secondary);
-  max-width: 600px;
-  margin: 0 auto 2rem;
+  max-width: 560px;
+  margin: 0 auto 2.5rem;
   font-style: italic;
+  font-family: var(--font-display);
+  font-weight: 300;
+  line-height: 1.5;
 }
 
 .hero-cta {
   display: inline-block;
-  padding: 12px 36px;
+  padding: 14px 40px;
   background: transparent;
   border: 1px solid var(--accent-gold);
   color: var(--accent-gold);
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  letter-spacing: 0.05em;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   cursor: pointer;
   transition: all var(--transition-slow);
+  border-radius: var(--border-radius);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent-gold);
+  opacity: 0;
+  transition: opacity var(--transition-slow);
+  z-index: -1;
 }
 
 .hero-cta:hover {
-  background: rgba(201, 168, 76, 0.1);
-  box-shadow: 0 0 30px rgba(201, 168, 76, 0.1);
+  color: var(--bg-deepest);
+  box-shadow: 0 0 40px rgba(201, 168, 76, 0.15);
+}
+
+.hero-cta:hover::before {
+  opacity: 1;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -771,3 +857,148 @@ footer {
 .mb-1 { margin-bottom: 1rem; }
 .mb-2 { margin-bottom: 2rem; }
 .py-4 { padding-top: 4rem; padding-bottom: 4rem; }
+
+/* ═══════════════════════════════════════════════════════════
+   SUBMARCA: El Templo del Gong (casa)
+   ═══════════════════════════════════════════════════════════ */
+[data-brand="templo"] {
+  --brand-accent: var(--templo-accent);
+  --brand-accent-soft: var(--templo-accent-soft);
+  --brand-glow: var(--templo-glow);
+  --brand-symbol: var(--templo-symbol);
+}
+
+[data-brand="templo"] .section-label,
+[data-brand="templo"] .nav-brand,
+[data-brand="templo"] .footer-brand {
+  color: var(--templo-accent);
+}
+
+[data-brand="templo"] .card-icon {
+  background: radial-gradient(circle at 40% 40%, var(--templo-accent), transparent 100%);
+}
+
+[data-brand="templo"] .card-icon::before {
+  background: var(--templo-accent);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SUBMARCA: Camino del Gong (escuela)
+   ═══════════════════════════════════════════════════════════ */
+[data-brand="camino"] {
+  --brand-accent: var(--camino-accent);
+  --brand-accent-soft: var(--camino-accent-soft);
+  --brand-glow: var(--camino-glow);
+  --brand-symbol: var(--camino-symbol);
+}
+
+[data-brand="camino"] .section-label,
+[data-brand="camino"] .nav-links a.active,
+[data-brand="camino"] .subnav-links a.active {
+  color: var(--camino-accent);
+}
+
+[data-brand="camino"] .card-icon {
+  background: radial-gradient(circle at 40% 40%, var(--camino-accent), transparent 100%);
+}
+
+[data-brand="camino"] .card-icon::before {
+  background: var(--camino-accent);
+}
+
+[data-brand="camino"] .card:hover {
+  border-color: rgba(196, 122, 74, 0.3);
+  box-shadow: 0 0 30px rgba(196, 122, 74, 0.08);
+}
+
+[data-brand="camino"] .btn {
+  border-color: var(--camino-accent);
+  color: var(--camino-accent);
+}
+
+[data-brand="camino"] .btn:hover {
+  background: rgba(196, 122, 74, 0.1);
+  box-shadow: 0 0 20px rgba(196, 122, 74, 0.1);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SUBMARCA: Vikingong (taller)
+   ═══════════════════════════════════════════════════════════ */
+[data-brand="taller"] {
+  --brand-accent: var(--taller-accent);
+  --brand-accent-soft: var(--taller-accent-soft);
+  --brand-glow: var(--taller-glow);
+  --brand-symbol: var(--taller-symbol);
+}
+
+[data-brand="taller"] .section-label,
+[data-brand="taller"] .nav-links a.active,
+[data-brand="taller"] .subnav-links a.active {
+  color: var(--taller-accent);
+}
+
+[data-brand="taller"] .card-icon {
+  background: radial-gradient(circle at 40% 40%, var(--taller-accent), transparent 100%);
+}
+
+[data-brand="taller"] .card-icon::before {
+  background: var(--taller-accent);
+}
+
+[data-brand="taller"] .card:hover {
+  border-color: rgba(160, 120, 80, 0.3);
+  box-shadow: 0 0 30px rgba(160, 120, 80, 0.08);
+}
+
+[data-brand="taller"] .btn {
+  border-color: var(--taller-accent);
+  color: var(--taller-accent);
+}
+
+[data-brand="taller"] .btn:hover {
+  background: rgba(160, 120, 80, 0.1);
+  box-shadow: 0 0 20px rgba(160, 120, 80, 0.1);
+}
+
+[data-brand="taller"] .gong-card-visual {
+  background: radial-gradient(circle at 35% 35%, var(--taller-accent), var(--accent-copper) 55%, transparent 100%);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SUBMARCA: MaitreyIA (digital)
+   ═══════════════════════════════════════════════════════════ */
+[data-brand="maitreyia"] {
+  --brand-accent: var(--maitreyia-accent);
+  --brand-accent-soft: var(--maitreyia-accent-soft);
+  --brand-glow: var(--maitreyia-glow);
+  --brand-symbol: var(--maitreyia-symbol);
+}
+
+[data-brand="maitreyia"] .section-label,
+[data-brand="maitreyia"] .nav-links a.active,
+[data-brand="maitreyia"] .subnav-links a.active {
+  color: var(--maitreyia-accent);
+}
+
+[data-brand="maitreyia"] .card-icon {
+  background: radial-gradient(circle at 40% 40%, var(--maitreyia-accent), transparent 100%);
+}
+
+[data-brand="maitreyia"] .card-icon::before {
+  background: var(--maitreyia-accent);
+}
+
+[data-brand="maitreyia"] .card:hover {
+  border-color: rgba(122, 156, 196, 0.3);
+  box-shadow: 0 0 30px rgba(122, 156, 196, 0.08);
+}
+
+[data-brand="maitreyia"] .btn {
+  border-color: var(--maitreyia-accent);
+  color: var(--maitreyia-accent);
+}
+
+[data-brand="maitreyia"] .btn:hover {
+  background: rgba(122, 156, 196, 0.1);
+  box-shadow: 0 0 20px rgba(122, 156, 196, 0.1);
+}
