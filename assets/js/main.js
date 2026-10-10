@@ -106,3 +106,31 @@
     });
   });
 })();
+
+/* === Modal del vídeo TantraGong (pantalla de creación) === */
+(function () {
+  'use strict';
+  var modal = document.getElementById('video-modal');
+  var playBtn = document.getElementById('play-tantra');
+  var video = document.getElementById('tantra-video');
+  if (!modal || !playBtn) return;
+
+  function open() {
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    if (video) { try { video.play(); } catch (e) {} }
+  }
+  function close() {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    if (video) { try { video.pause(); } catch (e) {} }
+  }
+
+  playBtn.addEventListener('click', open);
+  modal.querySelectorAll('[data-close]').forEach(function (el) {
+    el.addEventListener('click', close);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
