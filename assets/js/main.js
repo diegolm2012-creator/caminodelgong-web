@@ -134,3 +134,16 @@
     if (e.key === 'Escape') close();
   });
 })();
+
+/* === Portada mínima: botón de sonido sobre el vídeo a pantalla completa === */
+(function () {
+  'use strict';
+  var btn = document.getElementById('unmute-btn');
+  var video = document.getElementById('portada-video');
+  if (!btn || !video) return;
+  btn.addEventListener('click', function () {
+    video.muted = !video.muted;
+    btn.classList.toggle('unmuted', video.muted);
+    if (!video.muted) { try { video.play(); } catch (e) {} }
+  });
+})();
