@@ -1,23 +1,38 @@
-# Camino del Gong — Web oficial
+# caminodelgong.com — Sitio oficial
 
-Sitio web de **Camino del Gong**, el sendero de la práctica meditativa con cuencos tibetanos, gongs y armónicos.
-
-- **Luthería consciente**: cuencos tibetanos antiguos y contemporáneos, gongs, campanas de viento.
-- **Cursos**: formación en baño de sonido, masaje sonoro y práctica personal.
-- **Acompañamiento**: sesiones individuales y ceremonias de gong.
+Sitio web de **El Templo del Gong** y sus cuatro marcas: la casa (El Templo del
+Gong), la escuela armónica (Camino del Gong), la artesanía (Vikingong) y los
+productos digitales (MaitreyIA).
 
 ## Stack técnico
 
-- Sitio estático HTML + CSS plano (sin frameworks)
+- Sitio estático HTML + CSS + JS vanilla (sin frameworks)
 - Hosting: **Cloudflare Pages** (despliegue automático con cada push)
 - Dominio: **caminodelgong.com** (Cloudflare Registrar)
 
 ## Estructura
 
-- `index.html` — Página principal con todas las secciones
-- `assets/css/main.css` — Todo el sistema de diseño (colores, tipografías, animaciones, responsive)
-- `assets/js/main.js` — Interactividad ligera (menú móvil, navegación por scroll, scroll-reveal)
-- `sitemap.xml` — Índice de páginas para buscadores
+```
+/                     → Home (El Templo del Gong)
+/quien-soy/           → Biografía de Diego
+/linaje/              → Don Conreaux y linaje
+/contacto/            → Formulario de contacto
+/camino/              → Camino del Gong (escuela armónica)
+/camino/ensenanzas/   → Linaje Don Conreaux
+/camino/formacion/    → Gong Master Training
+/camino/sesiones/     → Baños de gong, conciertos
+/camino/performances/ → Teatro sonoro
+/taller/              → Vikingong (taller de artesanía)
+/taller/gongs/        → Los instrumentos (60/75/95 cm)
+/taller/crea-tu-gong/ → Talleres «Crea tu gong»
+/maitreyia/           → MaitreyIA (productos digitales) [PENDIENTE DE DIEGO]
+```
+
+## Recursos compartidos
+
+- `css/style.css` — Sistema de diseño único (paleta, tipografía, componentes)
+- `assets/js/main.js` — Interactividad (menú móvil, scroll-reveal, navegación)
+- `sitemap.xml` — 13 URLs
 
 ## Contenido
 
@@ -33,4 +48,4 @@ El dominio `caminodelgong.com` apunta a Cloudflare (configurado en `CNAME`).
 
 ## Créditos
 
-&copy; 2026 Camino del Gong — Diego Montenegro
+&copy; 2026 El Templo del Gong — Diego Montenegro

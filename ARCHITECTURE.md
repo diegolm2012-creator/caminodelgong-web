@@ -16,12 +16,13 @@ accesible y verificable.
 | Ámbito | Dato verídico |
 |---|---|
 | Nombre y dominio | Camino del Gong — `caminodelgong.com` (Cloudflare, operativa) |
-| Ecosistema | Vikingong (lutería) · El Camino del Gong (divulgación/Formación/comunidad) · El Templo del Gong (@vikingong) |
+| Ecosistema | **El Templo del Gong** (la casa) · Camino del Gong (escuela armónica) · Vikingong (artesanía) · MaitreyIA (productos digitales) |
+| Jerarquía | El Templo del Gong es siempre el primer nivel (migas, footer, nav). Las submarcas nunca se presentan como sustitutas de la casa. |
 | Misión de comunicación | Divulgar los usos y la utilidad del Gong como instrumento sagrado; no es vender: es educar y acercar |
 | Tamaños de gong | 60 / 75 / 95 cm (precios SIEMPRE privados — nunca aparecer) |
 | Ubicación | Taller: Galicia y Lanzarote |
 | Contacto formal | `elcaminodelgong@gmail.com` (no publicar teléfono) |
-| Canales | YouTube `@vikingong` · IG/FB `@vikingong` · TikTok (sesión en navegador) |
+| Canales | YouTube `@elcaminodelgong` · IG `@vikingong` · TikTok `@vikingong` · FB página de El Templo del Gong |
 | Excluidos | `eltemplodelgong.com` — SUSPENDIDA; NO usar enlaces inventados |
 | Vocabulario del oficio | gong · batido / strokes · armónicos · resonancia · afinación · aleación · flourish · silencio · presencia · instrumento sagrado · ceremonia · intención · vibración · viaje sonoro |
 | Tono | Español natural (castellano de España). Doctrina firme, trato humilde. Cero precios, cero CTA comercial en el registro doctrinal. |
@@ -31,73 +32,107 @@ accesible y verificable.
 - **Stack**: HTML semántico + CSS (custom properties, Grid, Flexbox) + JS vanilla.
   Sin frameworks, sin dependencias de build. Compatible con cualquier servidor
   estático y con Cloudflare Pages.
-- **Capas**: índice + 6 secciones (hero, oferta, laboratorio virtual, enciclopedia,
-  taller, contacto/avisos legales) + footer + nav fija.
-- **Entregables** (6 archivos):
-  - `index.html` — Página principal con todas las secciones
-  - `assets/css/main.css` — Todo el sistema de diseño (colores, tipografías, animaciones, responsive)
-  - `assets/js/main.js` — Interactividad ligera (menú móvil, scroll-reveal, toasts, navegación por teclado)
-  - `sitemap.xml` — Índice de páginas para buscadores
-  - `ARCHITECTURE.md` — Diseño, identidad, flujo de trabajo y mantenimiento
-  - `README.md` — Resumen del proyecto y flujo de trabajo
+- **Estructura**: multi-página con subcarpetas. Una sola hoja de estilos y un
+  solo JS compartidos por todo el sitio.
+- **URLs limpias**: `/camino/ensenanzas/` (no `index.html`). Cloudflare Pages
+  resuelve los `index.html` de cada carpeta automáticamente.
+
+### Estructura de archivos
+
+```
+caminodelgong-web-restore/
+├── index.html                    → Home (El Templo del Gong)
+├── CNAME                         → caminodelgong.com
+├── favicon.svg                   → Sello del sitio
+├── robots.txt                    → SEO
+├── seo.jsonld                    → Datos estructurados
+├── sitemap.xml                   → 13 URLs
+├── ARCHITECTURE.md               → Este documento
+├── README.md                     → Resumen del proyecto
+│
+├── css/
+│   └── style.css                 → Sistema de diseño (único, compartido)
+│
+├── assets/
+│   ├── js/
+│   │   └── main.js               → Interactividad (único, compartido)
+│   └── img/                      → Imágenes (futuro)
+│
+├── camino/                       → Camino del Gong
+│   ├── index.html                → Portada de la escuela
+│   ├── ensenanzas/index.html     → Linaje Don Conreaux
+│   ├── formacion/index.html      → Gong Master Training
+│   ├── sesiones/index.html       → Baños de gong, conciertos
+│   └── performances/index.html   → Teatro sonoro
+│
+├── taller/                       → Vikingong
+│   ├── index.html                → Portada del taller
+│   ├── gongs/index.html          → Los instrumentos (60/75/95 cm)
+│   └── crea-tu-gong/index.html   → Talleres «Crea tu gong»
+│
+├── maitreyia/                    → MaitreyIA
+│   └── index.html                → [PENDIENTE DE DIEGO]
+│
+├── quien-soy/index.html          → Biografía de Diego
+├── linaje/index.html             → Don Conreaux y linaje
+├── contacto/index.html           → Formulario de contacto
+│
+└── informes/
+    └── web_v1_verificacion.md    → Verificación anterior
+```
 
 ## 4. Diseño visual
 
-- **Atmósfera**: mística, oriental, sonida, armónica — herencia/tibetana, papel
-  y tinta, acentos dorados cálidos. Inspiración en el Tibetano y en la buena
-  manera del oficio.
-- **Paleta**: papel/ink con acentos dorados y cobre; fondo neutro `oak` sutil
-  (no negro) en las secciones; alta diferenciación de marca.
-- **Tipografía**: serif elegante (`Cormorant Garamond` + `DM Serif Display` para
-  títulos; `Source Serif 4` para cuerpo). Fallback a `Georgia, 'Times New Roman'`
-  si no carga Google Fonts.
-- **Animaciones**: entrada en seco (fade/slide), pulso sutil del símbolo del gong,
-  degradado radial de brillo para el sonido; tanto suave al pasar el cursor.
-- **Responsive**: ancho de contenido máximo 1100px, nav colapsable en móvil,
-  Grid adaptable (3→2→1 columnas), sin dependencia de JS para leer.
+- **Atmósfera**: profunda, sonora, artesanal. Herencia tibetana con acentos
+  dorados y cobre sobre fondos oscuros.
+- **Paleta**: fondos oscuros (`--bg-deepest` #0a0a0b, `--bg-panel` #141518,
+  `--bg-card` #1e2028) con acentos dorado (`--accent-gold` #c9a84c) y cobre
+  (`--accent-copper` #b87333). Custom properties en `css/style.css`.
+- **Tipografía**: Georgia / 'Times New Roman' serif (display y body).
+- **Animaciones**: fade-in, pulso sutil del símbolo del gong, scroll-reveal.
+- **Responsive**: ancho máximo 1200px, nav colapsable en móvil,
+  Grid adaptable (auto-fill minmax 280px), sin dependencia de JS para leer.
 
 ## 5. Componentes de la página
 
-- **Nav**: logo "◯ Camino del Gong", enlaces, botón del menú móvil.
-- **Hero**: título + subtítulo + byline + CTA a `#laboratorio`.
-- **Sección de oferta (bienvenida)**: intro breve.
-- **Laboratorio virtual (gong)**: tarjetas de los gongs (Sinfónico 80, Planetario 70,
-  Luna Llena, Nepalí 7 metales) — sin precio, solo identidad y sonido. Botón
-  "escuchar" (por ahora sin audio; se deja como enlace a acción documentada).
-- **Enciclopedia**: artículos de acceso rápido.
-- **Taller**: diario del luthier (3 publicaciones con fecha).
-- **Contacto**: enlace únicamente a `mailto:elcaminodelgong@gmail.com`,
-  atención a CI/CD y accesibilidad.
-- **Footer**: marca, enlaces de redes, copyright.
+- **Nav**: logo "◯ El Templo del Gong" (la casa), enlaces a las 4 marcas, botón hamburguesa en móvil.
+- **Hero**: título "El gong no se vende, se comprende" + subtítulo + CTA.
+- **Breadcrumbs**: El Templo del Gong › Submarca › Página (jerarquía de marcas).
+- **Subnav**: menú contextual por submarca (Enseñanzas, Formación, etc.).
+- **Cards**: reutilizables, con hover dorado/cobre.
+- **Gong-cards**: 60/75/95 cm, sin precios, solo identidad y sonido.
+- **Contacto**: formulario + email + WhatsApp.
+- **Footer**: 4 columnas de marcas + email + copyright.
 
 ## 6. Flujo de trabajo de desarrollo
 
 1. Setup del entorno (herramientas: git, GitHub, Cloudflare Pages).
-2. Rama de inicio: `feat/frontend-v1`.
-3. Implementación por horizontes:
-   - Frontend: HTML + CSS + JS (este repositorio)
-   - Despliegue: Cloudflare Pages (ya configurado: CNAME, dominio apuntando a
-     `caminodelgong.pages.dev`)
-4. Pruebas locales (HTML, CSS, JS) antes del commit.
-5. Commit en `main` → despliegue Cloudflare Pages automático.
-6. Surtido del sitio haciendo mirroring de la estructura en el repositorio
-   para refactorización manual de los bloques de flujo y vida útil.
+2. Arquitectura de información definida en `web_arquitectura_ia.md`.
+3. Estructura multi-página con subcarpetas implementada.
+4. Recursos compartidos: `css/style.css` + `assets/js/main.js` (único CSS y JS).
+5. Verificación local: todas las URLs responden 200.
+6. Commit en `main` → despliegue Cloudflare Pages automático.
 
 ## 7. Mantenimiento
 
-- Edición directa de `index.html` y `assets/css/main.css` (sin build).
-- `sitemap.xml` actualizable manualmente.
-- Registro de cambios (logs) en el README y en la bitácora del repositorio.
-- Verificación de recursos externos (CDN, fuentes) antes de publicar.
+- Edición directa de `index.html`, subcarpetas, `css/style.css` y
+  `assets/js/main.js` (sin build).
+- `sitemap.xml` actualizable manualmente (13 URLs).
+- Verificación local antes de commit: `python -m http.server` + comprobación
+  de que todas las URLs responden 200.
+- Registro de cambios (logs) en la bitácora del repositorio.
 
 ## 8. Restricciones
 
 - **Nunca publicar precios** ni importes.
-- **No avanzar** sobre datos no verificados (archivo + nº de frase).
-- **Una sola CTA** por sección.
-- **Cero emojis** en el registro doctrinal; máximo 0–2 si aportan calidez.
-- **Sin lenguaje comercial agresivo** («descubre», «no te lo pierdas»).
+- **No enlaces a `eltemplodelgong.com`** (dominio suspendido).
+- **No inventar handles de redes.** Usar solo los verificados.
+- **No promesas de curación** ni beneficios terapéuticos concretos.
+- **No testimonios inventados** ni superlativos de marca.
+- **No publicidad ni afiliados.**
+- **Solo un email público**: `elcaminodelgong@gmail.com`.
 - **Navegación por teclado** y `aria` conforme a WCAG.
 - El dominio `caminodelgong.com` ya apunta a Cloudflare; no se toca DNS.
 - El repositorio base es el de Diego en GitHub (`diegolm2012-creator/caminodelgong-web`),
   con la rama `main` un tanto ligera; se debe agregar el frontend completo.
+- **Migas de pan**: El Templo del Gong es siempre el primer nivel.

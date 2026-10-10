@@ -1,100 +1,175 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Camino del Gong — El gong no se vende, se comprende</title>
-<meta name="description" content="Laboratorio sonoro, enciclopedia y taller del gong.">
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <title>El Templo del Gong — El gong no se vende, se comprende</title>
+  <meta name="description" content="Laboratorio sonoro, enciclopedia viva y taller del luthier. El Templo del Gong: la casa de Camino del Gong, Vikingong y MaitreyIA.">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<nav>
-  <div class="nav-inner">
-    <a href="#" class="nav-brand">◯ Camino del Gong</a>
-    <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector(\'.nav-links\').classList.toggle(\'open\')">☰</button>
-    <ul class="nav-links">
-      <li><a href="#laboratorio">Laboratorio</a></li>
-      <li><a href="#enciclopedia">Enciclopedia</a></li>
-      <li><a href="#taller">Taller</a></li>
-      <li><a href="#contacto">Contacto</a></li>
-    </ul>
-  </div>
-</nav>
-<section class="hero" id="inicio">
-  <div class="container text-center">
-    <div class="gong-symbol fade-in"></div>
-    <h1 class="hero-title fade-in">El gong no se vende,<br>se comprende</h1>
-    <p class="hero-subtitle fade-in">Laboratorio sonoro, enciclopedia viva y taller del luthier.</p>
-    <a href="#laboratorio" class="hero-cta fade-in">Entrar al laboratorio</a>
-  </div>
-</section>
-<hr class="section-divider">
-<section id="laboratorio">
-  <div class="container">
-    <span class="section-label">🔬 Laboratorio sonoro</span>
-    <h2 class="section-title">Escucha cada gong</h2>
-    <p class="section-desc">Cada instrumento tiene su propia voz. Samples reales grabados en el taller.</p>
-    <div class="lab-grid">
-      <article class="card-gong"><div class="card-gong-icon"></div><h3>Gong Sinfonico 80 cm</h3><p>Bronce acustico B20. Sonido profundo.</p><div><span class="tag">Sinfonico</span><span class="tag">80 cm</span></div><button class="sample-btn" onclick="alert(\'Sample proximo\')">▶ Escuchar sample</button></article>
-      <article class="card-gong"><div class="card-gong-icon"></div><h3>Gong Planetario 70 cm</h3><p>Afinado a frecuencias planetarias.</p><div><span class="tag">Planetario</span><span class="tag">70 cm</span></div><button class="sample-btn" onclick="alert(\'Sample proximo\')">▶ Escuchar sample</button></article>
-      <article class="card-gong"><div class="card-gong-icon"></div><h3>Gong Personalizado</h3><p>Disenado con tu intencion.</p><div><span class="tag">A medida</span><span class="tag">Unico</span></div><button class="sample-btn" onclick="alert(\'Contactanos\')">Solicitar info</button></article>
-      <article class="card-gong"><div class="card-gong-icon"></div><h3>Gong de Viento 60 cm</h3><p>Sonido expansivo, armonicos.</p><div><span class="tag">Viento</span><span class="tag">60 cm</span></div><button class="sample-btn" onclick="alert(\'Sample proximo\')">▶ Escuchar sample</button></article>
-      <article class="card-gong"><div class="card-gong-icon"></div><h3>Gong Nepalí 7 Metales</h3><p>Aleacion tradicional.</p><div><span class="tag">Nepali</span><span class="tag">7 metales</span></div><button class="sample-btn" onclick="alert(\'Sample proximo\')">▶ Escuchar sample</button></article>
-      <article class="card-gong"><div class="card-gong-icon"></div><h3>Gong Luna Llena</h3><p>Forjado bajo energia lunar.</p><div><span class="tag">Ceremonial</span><span class="tag">Unico</span></div><button class="sample-btn" onclick="alert(\'Sample proximo\')">▶ Escuchar sample</button></article>
+  <a href="#inicio" class="skip-link">Saltar al contenido</a>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">◯ El Templo del Gong</a>
+      <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">☰</button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="/camino/">Camino del Gong</a></li>
+        <li><a href="/taller/">Vikingong</a></li>
+        <li><a href="/maitreyia/">MaitreyIA</a></li>
+        <li><a href="/contacto/">Contacto</a></li>
+      </ul>
     </div>
-  </div>
-</section>
-<hr class="section-divider">
-<section id="enciclopedia">
-  <div class="container">
-    <span class="section-label">📖 Enciclopedia del gong</span>
-    <h2 class="section-title">Todo lo que necesitas saber</h2>
-    <p class="section-desc">Contenido original de un luthier con decadas de oficio.</p>
-    <div class="enc-index">
-      <a href="#" class="enc-item"><h3>Que es un gong?</h3><p>Historia y tipos.</p></a>
-      <a href="#" class="enc-item"><h3>Como elegir tu gong</h3><p>Guia para principiantes.</p></a>
-      <a href="#" class="enc-item"><h3>Como tocar el gong</h3><p>Tecnicas basicas.</p></a>
-      <a href="#" class="enc-item"><h3>Mantenimiento</h3><p>Cuidado y limpieza.</p></a>
-      <a href="#" class="enc-item"><h3>Glosario</h3><p>El lenguaje del gong.</p></a>
-      <a href="#" class="enc-item"><h3>Frecuencias</h3><p>Planetaria y solfeggio.</p></a>
-      <a href="#" class="enc-item"><h3>Tipos de gong</h3><p>Cada uno con su alma.</p></a>
-      <a href="#" class="enc-item"><h3>Gong en terapia</h3><p>Banos de sonido.</p></a>
+  </nav>
+
+  <main id="inicio">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container text-center">
+        <div class="hero-symbol fade-in" aria-hidden="true"></div>
+        <h1 class="hero-title fade-in">El gong no se vende,<br>se comprende</h1>
+        <p class="hero-subtitle fade-in">Laboratorio sonoro, enciclopedia viva y taller del luthier.</p>
+        <a href="#marcas" class="hero-cta fade-in">Entrar al laboratorio</a>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- EL TEMPLO DEL GONG — La casa -->
+    <section>
+      <div class="container">
+        <span class="section-label">◯ El Templo del Gong</span>
+        <h2 class="section-title">La casa. Desde 2013.</h2>
+        <p class="section-desc">El Templo del Gong es el ecosistema donde conviven la escuela armónica, el taller de luthería y los productos digitales. Una sola casa, cuatro marcas.</p>
+        <div class="card-grid">
+          <article class="card">
+            <div class="card-icon" aria-hidden="true"></div>
+            <h3>Quién soy</h3>
+            <p>Diego Lorenzo Montenegro: el lutier. Oficio, trayectoria y formación en la tradición del gong.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon" aria-hidden="true"></div>
+            <h3>Linaje</h3>
+            <p>Don Conreaux, Mysterius Tremendum, Starhenge. La base filosófica de todo el ecosistema.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon" aria-hidden="true"></div>
+            <h3>Contacto</h3>
+            <p>Formulario, email y WhatsApp. Sin precios, sin comercial: solo conversación.</p>
+          </article>
+        </div>
+        <div class="brand-links">
+          <a href="/quien-soy/" class="btn btn-primary">Quién soy</a>
+          <a href="/linaje/" class="btn btn-primary">Linaje</a>
+          <a href="/contacto/" class="btn btn-primary">Contacto</a>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- LAS 4 MARCAS -->
+    <section id="marcas">
+      <div class="container">
+        <span class="section-label">Las cuatro marcas</span>
+        <h2 class="section-title">Un ecosistema, un camino</h2>
+
+        <!-- Camino del Gong -->
+        <div class="brand-section">
+          <span class="section-label">Camino del Gong</span>
+          <h3>Identidad digital y escuela armónica</h3>
+          <p>Las enseñanzas de Don Conreaux: conocimiento terapéutico y teatral del Gong.</p>
+          <div class="brand-links">
+            <a href="/camino/ensenanzas/" class="btn btn-primary">Enseñanzas</a>
+            <a href="/camino/formacion/" class="btn btn-primary">Formación</a>
+            <a href="/camino/sesiones/" class="btn btn-primary">Sesiones</a>
+            <a href="/camino/performances/" class="btn btn-primary">Performances</a>
+          </div>
+        </div>
+
+        <!-- Vikingong -->
+        <div class="brand-section">
+          <span class="section-label">Vikingong</span>
+          <h3>Taller de artesanía</h3>
+          <p>Gongs hechos a mano en Galicia y Lanzarote. Luthería consciente: bronce, martillado, afinación.</p>
+          <div class="brand-links">
+            <a href="/taller/gongs/" class="btn btn-primary">Ver gongs</a>
+            <a href="/taller/crea-tu-gong/" class="btn btn-primary">Crea tu gong</a>
+          </div>
+        </div>
+
+        <!-- MaitreyIA -->
+        <div class="brand-section">
+          <span class="section-label">MaitreyIA</span>
+          <h3>Productos digitales</h3>
+          <p>[PENDIENTE DE DIEGO] — La marca arranca desde cero. Contenido, productos y herramientas digitales en desarrollo.</p>
+          <div class="brand-links">
+            <a href="/maitreyia/" class="btn btn-primary">MaitreyIA</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- CONTACTO RÁPIDO -->
+    <section class="py-4">
+      <div class="container text-center">
+        <span class="section-label">Conecta</span>
+        <h2 class="section-title">El gong es un camino que se recorre acompañado</h2>
+        <p class="section-desc" style="margin-left:auto;margin-right:auto;">Este espacio está abierto. Escríbenos:</p>
+        <a href="mailto:elcaminodelgong@gmail.com" class="hero-cta">elcaminodelgong@gmail.com</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <div class="footer-brand">◯ El Templo del Gong</div>
+        <p class="footer-tagline">La casa. Desde 2013.</p>
+      </div>
+      <div class="footer-col">
+        <h4>El Templo del Gong</h4>
+        <ul>
+          <li><a href="/quien-soy/">Quién soy</a></li>
+          <li><a href="/linaje/">Linaje</a></li>
+          <li><a href="/contacto/">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Camino del Gong</h4>
+        <ul>
+          <li><a href="/camino/ensenanzas/">Enseñanzas</a></li>
+          <li><a href="/camino/formacion/">Formación</a></li>
+          <li><a href="/camino/sesiones/">Sesiones</a></li>
+          <li><a href="/camino/performances/">Performances</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Vikingong</h4>
+        <ul>
+          <li><a href="/taller/gongs/">Gongs</a></li>
+          <li><a href="/taller/crea-tu-gong/">Crea tu gong</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>MaitreyIA</h4>
+        <ul>
+          <li><a href="/maitreyia/">[PENDIENTE]</a></li>
+        </ul>
+      </div>
     </div>
-  </div>
-</section>
-<hr class="section-divider">
-<section id="taller">
-  <div class="container">
-    <span class="section-label">🛠️ Taller</span>
-    <h2 class="section-title">Diario del luthier</h2>
-    <p class="section-desc">El proceso, los materiales, las historias.</p>
-    <div class="taller-grid">
-      <article class="taller-post"><span class="date">Octubre 2026</span><h3>El bronce que canta</h3><p>Como elegir la aleacion.</p></article>
-      <article class="taller-post"><span class="date">Septiembre 2026</span><h3>Forja a mano vs. molde</h3><p>El martillado manual.</p></article>
-      <article class="taller-post"><span class="date">Agosto 2026</span><h3>El viaje del gong</h3><p>Del taller a tus manos.</p></article>
+    <div class="footer-bottom">
+      <p class="footer-email"><a href="mailto:elcaminodelgong@gmail.com">elcaminodelgong@gmail.com</a></p>
+      <p class="footer-copy">© 2026 El Templo del Gong — Diego Montenegro</p>
     </div>
-  </div>
-</section>
-<hr class="section-divider">
-<section id="contacto" class="py-4">
-  <div class="container text-center">
-    <span class="section-label">🌐 Conecta</span>
-    <h2 class="section-title">El gong es un camino que se recorre acompanado</h2>
-    <p class="section-desc" style="max-width:480px;margin-left:auto;margin-right:auto;">Este espacio esta abierto.</p>
-    <a href="mailto:info@caminodelgong.com" class="hero-cta" style="font-size:0.9rem;">info@caminodelgong.com</a>
-  </div>
-</section>
-<footer>
-  <div class="container text-center">
-    <div class="footer-brand">◯ Camino del Gong</div>
-    <div class="footer-links">
-      <a href="https://www.instagram.com/elcaminodelgong" target="_blank">Instagram</a>
-      <a href="https://www.youtube.com/@elcaminodelgong" target="_blank">YouTube</a>
-      <a href="https://www.tiktok.com/@vikingong" target="_blank">TikTok</a>
-      <a href="https://www.facebook.com/eltemplodelgong" target="_blank">Facebook</a>
-    </div>
-    <p class="footer-copy">© 2026 Camino del Gong — Diego Montenegro</p>
-  </div>
-</footer>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
 </body>
 </html>
