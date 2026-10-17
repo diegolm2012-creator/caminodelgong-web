@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#081116">
+<title>Afinador de Gong V0.04</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Space+Grotesk:wght@400;500;700&family=Manrope:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root{
+  --background:#081116; --surface:#0b151b; --card:#0d191f; --card-hi:#101e26;
+  --foreground:#ecf7f5; --muted:#7d8f96;
+  --border:rgba(179,220,229,.14); --border-hi:rgba(179,220,229,.30);
+  --primary:#16d8e3; --brass:#c69c5b; --brass-hi:#e8d9a8; --brass-lo:#8a6e2f;
+  --data-2:#ffb84d; --data-3:#ff8466; --data-4:#8067ff; --ok:#37e6a4; --silver:#c9d7e2;
+  --r-xs:4px; --r-sm:6px; --r:12px; --r-lg:16px; --r-pill:999px;
+  --f-brand:"Marcellus",Georgia,serif;
+  --f-display:"Space Grotesk",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-sans:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,"Courier New",monospace;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--background);color:var(--foreground);
+  font-family:var(--f-sans);font-size:14px;line-height:1.45;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+
+/* ---------- VESTIMENTA: topografía de resonancia + rejilla ---------- */
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-color:var(--background);
+  background-image:
+    radial-gradient(circle at 84% 8%, rgba(198,156,91,.14), transparent 38%),
+    radial-gradient(circle at 10% 92%, rgba(22,216,227,.09), transparent 42%),
+    radial-gradient(circle 13vmax at 50% 30%, transparent 97.6%, rgba(22,216,227,.32) 98.4%, transparent 99.4%),
+    radial-gradient(circle 21vmax at 50% 30%, transparent 97.6%, rgba(198,156,91,.24) 98.4%, transparent 99.4%),
+    radial-gradient(circle 30vmax at 50% 30%, transparent 97.6%, rgba(22,216,227,.20) 98.4%, transparent 99.4%),
+    radial-gradient(circle 40vmax at 50% 30%, transparent 97.6%, rgba(198,156,91,.16) 98.4%, transparent 99.4%),
+    radial-gradient(circle 51vmax at 50% 30%, transparent 97.6%, rgba(22,216,227,.13) 98.4%, transparent 99.4%),
+    radial-gradient(circle 63vmax at 50% 30%, transparent 97.6%, rgba(198,156,91,.10) 98.4%, transparent 99.4%),
+    radial-gradient(circle 76vmax at 50% 30%, transparent 97.6%, rgba(22,216,227,.075) 98.4%, transparent 99.4%),
+    repeating-linear-gradient(90deg, rgba(117,158,160,.055) 0 1px, transparent 1px 38px),
+    repeating-linear-gradient(0deg,  rgba(117,158,160,.040) 0 1px, transparent 1px 34px);
+}
+
+/* ---------- cabecera ---------- */
+body{padding:16px 18px max(16px,env(safe-area-inset-bottom)) 18px}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;
+  padding-bottom:14px;border-bottom:1px solid var(--border)}
+.brand h1{font-family:var(--f-brand);font-size:16px;font-weight:400;letter-spacing:.26em;
+  color:var(--brass);margin:0;line-height:1;text-shadow:0 0 24px rgba(198,156,91,.32)}
+.brand small{display:block;font-size:8.5px;font-weight:600;letter-spacing:.26em;
+  color:var(--muted);margin-top:6px}
+.gong-wrap{position:relative;flex:0 0 auto;padding-bottom:14px}
+.gong{width:54px;height:54px;border-radius:50%;border:1.5px solid var(--brass);
+  background:radial-gradient(circle at 36% 30%,var(--brass-hi),var(--brass) 46%,var(--brass-lo) 80%);
+  box-shadow:0 0 26px rgba(198,156,91,.24), inset 0 0 12px rgba(0,0,0,.5);position:relative}
+.gong::after{content:"";position:absolute;inset:35%;border-radius:50%;
+  background:var(--background);opacity:.72}
+.gong-ref{position:absolute;top:calc(100% - 12px);left:0;width:54px;height:54px;border-radius:50%;
+  transform:scaleY(-1);opacity:.26;
+  background:radial-gradient(circle at 36% 30%,var(--brass-hi),var(--brass-lo) 80%);
+  -webkit-mask-image:linear-gradient(to top,#000,transparent 60%);
+  mask-image:linear-gradient(to top,#000,transparent 60%)}
+
+/* ---------- etiquetas y tipografía ---------- */
+.etq{font-size:9px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--brass)}
+.vacio{color:var(--muted);font-size:12px;padding:6px 2px;font-family:var(--f-mono)}
+section{margin-top:20px;border-top:1px solid var(--border);padding-top:12px}
+
+/* ---------- pie ---------- */
+footer{margin-top:22px;display:flex;gap:10px;align-items:center;
+  padding-bottom:max(4px,env(safe-area-inset-bottom))}
+button{flex:1;border:0;border-radius:var(--r);padding:16px 12px;font-size:14px;font-weight:700;
+  font-family:var(--f-sans);letter-spacing:.08em;text-transform:uppercase;
+  background:var(--primary);color:#04161a;box-shadow:0 0 28px rgba(22,216,227,.22)}
+button.parar{background:var(--data-3);color:#2a0c05;box-shadow:none}
+.estado{font-family:var(--f-mono);font-size:10.5px;color:var(--muted);text-align:right;min-width:94px}
+
+.lectura{margin:22px 0 6px}
+.nota{font-family:var(--f-display);font-size:78px;line-height:1;font-weight:500;
+  color:var(--primary);letter-spacing:-.02em;text-shadow:0 0 44px rgba(22,216,227,.30)}
+.hz{font-family:var(--f-mono);font-size:26px;font-weight:500;margin-top:5px;
+  color:var(--foreground);font-variant-numeric:tabular-nums}
+.hz small{font-size:13px;color:var(--muted);margin-left:6px;letter-spacing:.1em}
+.cents{font-family:var(--f-mono);font-size:11.5px;margin-top:7px;color:var(--muted);
+  font-variant-numeric:tabular-nums}
+.aviso{margin-top:9px;font-size:12px;color:var(--data-2);min-height:17px;line-height:1.45}
+
+.filas{display:flex;flex-direction:column;gap:7px;margin-top:9px}
+.fila{display:grid;grid-template-columns:48px 1fr 84px 62px;align-items:center;gap:9px;
+  background:linear-gradient(rgba(11,29,35,.88),rgba(11,29,35,.72));
+  border:1px solid var(--border);border-radius:var(--r-sm);padding:9px 11px}
+.fila .id{font-family:var(--f-mono);font-size:11px;color:var(--primary);font-weight:500}
+.barra{height:6px;border-radius:3px;background:rgba(179,220,229,.09);overflow:hidden}
+.barra i{display:block;height:100%;width:0;
+  background:linear-gradient(90deg,rgba(22,216,227,.35),var(--primary))}
+.fila .f{font-family:var(--f-mono);font-size:13px;text-align:right;color:var(--silver);
+  font-variant-numeric:tabular-nums}
+.fila .c{font-family:var(--f-mono);font-size:10.5px;text-align:right;color:var(--muted);
+  font-variant-numeric:tabular-nums}
+
+/* parciales inarmónicos = serie secundaria → violeta (contrato de color) */
+#parciales .fila .id{color:var(--data-4)}
+#parciales .barra i{background:linear-gradient(90deg,rgba(128,103,255,.35),var(--data-4))}
+@media(orientation:landscape){
+  .nota{font-size:58px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <h1>GONG LUTHIER</h1>
+    <small>AFINADOR</small>
+  </div>
+  <div class="gong-wrap"><div class="gong"></div><div class="gong-ref"></div></div>
+</header>
+
+<div class="lectura">
+  <div class="etq">Nota fundamental</div>
+  <div class="nota" id="nota">—</div>
+  <div class="hz" id="hz">— <small>Hz</small></div>
+  <div class="cents" id="cents"></div>
+  <div class="aviso" id="aviso"></div>
+</div>
+
+<section>
+  <div class="etq">Armónicos que suenan</div>
+  <div class="filas" id="armonicos"><div class="vacio">Sin datos todavía.</div></div>
+</section>
+
+<section>
+  <div class="etq">Parciales inarmónicos</div>
+  <div class="filas" id="parciales"><div class="vacio">Sin datos todavía.</div></div>
+</section>
+
+<footer>
+  <button id="btn">Iniciar</button>
+  <div class="estado" id="estado">detenido</div>
+</footer>
+
+<script>
+/*
+ * MOTOR GONG v1 — núcleo de análisis, sin DOM, testeable con node.
+ * Gong-Luthier-Engine · 2026-10-14
+ *
+ * REGLA DE DISEÑO Nº1: CERO DATOS INCRUSTADOS.
+ * Ninguna frecuencia, nivel, nota o parcial está escrita en este fichero.
+ * Todo número que devuelve sale de las muestras que recibe.
+ *
+ * Reglas del proyecto aplicadas (skill `afinador-gong-app`):
+ *  - La fundamental se busca por PERIODICIDAD (YIN), nunca por el pico más bajo
+ *    del espectro. El espectro sirve para armónicos y para validar.
+ *  - fmin = 50 Hz.
+ *  - YIN: mínimo GLOBAL de la CMND, no el primero por debajo de un umbral.
+ *  - Corrección de octava: SOLO hacia arriba (2·f0, 3·f0) y con ventaja clara.
+ *    Nunca dividir.
+ *  - Modelo inarmónico  f_n = n·f0·√(1+B·n²)
+ *  - Interpolación parabólica siempre (precisión sub-bin).
+ *  - Suavizado por mediana para repetibilidad.
+ */
+
+'use strict';
+
+// ------------------------------------------------------------------ FFT
+
+function fft(re, im) {
+  const n = re.length;
+  for (let i = 1, j = 0; i < n; i++) {
+    let bit = n >> 1;
+    for (; j & bit; bit >>= 1) j ^= bit;
+    j ^= bit;
+    if (i < j) {
+      let t = re[i]; re[i] = re[j]; re[j] = t;
+      t = im[i]; im[i] = im[j]; im[j] = t;
+    }
+  }
+  for (let len = 2; len <= n; len <<= 1) {
+    const ang = -2 * Math.PI / len;
+    const wRe = Math.cos(ang), wIm = Math.sin(ang);
+    for (let i = 0; i < n; i += len) {
+      let cr = 1, ci = 0;
+      for (let k = 0; k < len / 2; k++) {
+        const a = i + k, b = i + k + len / 2;
+        const tr = re[b] * cr - im[b] * ci;
+        const ti = re[b] * ci + im[b] * cr;
+        re[b] = re[a] - tr; im[b] = im[a] - ti;
+        re[a] += tr; im[a] += ti;
+        const nr = cr * wRe - ci * wIm;
+        ci = cr * wIm + ci * wRe; cr = nr;
+      }
+    }
+  }
+}
+
+function ventanaHann(n) {
+  const w = new Float64Array(n);
+  for (let i = 0; i < n; i++) w[i] = 0.5 * (1 - Math.cos(2 * Math.PI * i / (n - 1)));
+  return w;
+}
+
+function ventanaBlackmanHarris(n) {
+  const w = new Float64Array(n);
+  for (let i = 0; i < n; i++) {
+    const x = 2 * Math.PI * i / (n - 1);
+    w[i] = 0.35875 - 0.48829 * Math.cos(x) + 0.14128 * Math.cos(2 * x) - 0.01168 * Math.cos(3 * x);
+  }
+  return w;
+}
+
+/** Espectro en dB de un bloque de muestras. */
+function espectroDb(muestras, ventana) {
+  const N = muestras.length;
+  const re = new Float64Array(N), im = new Float64Array(N);
+  for (let i = 0; i < N; i++) re[i] = (muestras[i] || 0) * (ventana ? ventana[i] : 1);
+  fft(re, im);
+  const db = new Float64Array(N / 2);
+  for (let i = 0; i < N / 2; i++) db[i] = 20 * Math.log10(Math.hypot(re[i], im[i]) / (N / 4) + 1e-12);
+  return db;
+}
+
+// ------------------------------------------------- interpolación de picos
+
+/** Desplazamiento sub-bin del máximo local en i, por parábola sobre dB. */
+function interpolarPico(dB, i) {
+  if (i < 1 || i >= dB.length - 1) return 0;
+  const a = dB[i - 1], b = dB[i], c = dB[i + 1];
+  const den = a - 2 * b + c;
+  return den === 0 ? 0 : 0.5 * (a - c) / den;
+}
+
+/** Máximos locales estrictos con prominencia, refinados sub-bin. */
+function buscarPicos(dB, binHz, hzMin, hzMax, promMinDb) {
+  const iLo = Math.max(2, Math.ceil(hzMin / binHz));
+  const iHi = Math.min(dB.length - 2, Math.floor(hzMax / binHz));
+  const radio = 20;
+  const out = [];
+  for (let i = iLo; i <= iHi; i++) {
+    if (dB[i] <= dB[i - 1] || dB[i] < dB[i + 1]) continue;
+    let suelo = dB[i];
+    for (let k = Math.max(iLo, i - radio); k <= Math.min(iHi, i + radio); k++) {
+      if (dB[k] < suelo) suelo = dB[k];
+    }
+    const prom = dB[i] - suelo;
+    if (prom < promMinDb) continue;
+    const d = interpolarPico(dB, i);
+    out.push({ hz: (i + d) * binHz, db: dB[i], prominencia: prom });
+  }
+  return out.sort((x, y) => x.hz - y.hz);
+}
+
+// ------------------------------------------------------------------ YIN
+
+/**
+ * Fundamental por periodicidad. Devuelve {f0, claridad, tau}.
+ * Mínimo GLOBAL de la CMND (no el primero por debajo de un umbral): el primer
+ * mínimo cae muchas veces en la sub-octava.
+ */
+function yin(x, sr, fmin = 50, fmax = 1200) {
+  const tauMin = Math.max(2, Math.floor(sr / fmax));
+  const tauMax = Math.min(Math.floor(sr / fmin), Math.floor(x.length / 2) - 1);
+  if (tauMax <= tauMin) return { f0: null, claridad: 0, tau: 0 };
+
+  const W = Math.max(256, Math.min(x.length - tauMax, 4096));
+  const d = new Float64Array(tauMax + 2);
+  for (let tau = tauMin; tau <= tauMax; tau++) {
+    let s = 0;
+    for (let j = 0; j < W; j++) {
+      const dif = (x[j] || 0) - (x[j + tau] || 0);
+      s += dif * dif;
+    }
+    d[tau] = s;
+  }
+
+  // CMND acumulada
+  const cmnd = new Float64Array(tauMax + 2);
+  let acum = 0;
+  for (let tau = 1; tau <= tauMax; tau++) {
+    acum += d[tau] || 0;
+    cmnd[tau] = acum > 0 ? (d[tau] || 0) * tau / acum : 1;
+  }
+
+  // YIN estándar: PRIMER mínimo local por debajo de un umbral absoluto.
+  // El mínimo GLOBAL puede caer en la sub-octava: en un tono puro el CMND en
+  // 2·tau es tan bajo como en tau, y el global elige el doble de periodo.
+  const UMBRAL = 0.15;
+  let mejor = -1;
+  for (let tau = tauMin + 1; tau < tauMax; tau++) {
+    if (cmnd[tau] < UMBRAL && cmnd[tau] <= cmnd[tau - 1] && cmnd[tau] < cmnd[tau + 1]) {
+      mejor = tau; break;
+    }
+  }
+  // respaldo: mínimo global (señales sin un mínimo claro por debajo del umbral)
+  if (mejor < 0) {
+    let mejorV = Infinity;
+    for (let tau = tauMin; tau <= tauMax; tau++) {
+      if (cmnd[tau] < mejorV) { mejorV = cmnd[tau]; mejor = tau; }
+    }
+  }
+  const mejorV = cmnd[mejor];
+
+  // refinar sub-muestra
+  let tau = mejor;
+  if (mejor > tauMin && mejor < tauMax) {
+    const a = cmnd[mejor - 1], b = cmnd[mejor], c = cmnd[mejor + 1];
+    const den = a - 2 * b + c;
+    if (den !== 0) tau = mejor + 0.5 * (a - c) / den;
+  }
+
+  return { f0: tau > 0 ? sr / tau : null, claridad: Math.max(0, 1 - mejorV), tau };
+}
+
+// ------------------------------------------------------- modelo inarmónico
+
+/** Soporte armónico: cuánta energía cae cerca de n·f0 (tolerancia ±3 %). */
+function soporteArmonico(picos, f0, maxN = 8, tolRel = 0.03) {
+  let suma = 0;
+  for (let n = 1; n <= maxN; n++) {
+    const obj = f0 * n;
+    let mejor = null;
+    for (const p of picos) {
+      if (Math.abs(p.hz - obj) <= obj * tolRel) {
+        if (!mejor || p.db > mejor.db) mejor = p;
+      }
+    }
+    if (mejor) suma += Math.max(0, mejor.db + 100) / n;
+  }
+  return suma;
+}
+
+/**
+ * Estimación del factor de inarmonicidad B y refinamiento de f0.
+ * f_n = n·f0·√(1+B·n²)
+ */
+function estimarInarmonicidad(picos, f0) {
+  let mejorB = 0, mejorErr = Infinity, mejorF0 = f0;
+  for (let B = 0; B <= 0.05; B += 0.0025) {
+    // para cada pico, el n entero que mejor encaja
+    let sumaErr = 0, n = 0;
+    for (const p of picos) {
+      let mejorN = 0, mejorE = Infinity;
+      for (let k = 1; k <= 12; k++) {
+        const f = k * f0 * Math.sqrt(1 + B * k * k);
+        const e = Math.abs(p.hz - f) / f;
+        if (e < mejorE) { mejorE = e; mejorN = k; }
+      }
+      if (mejorN >= 1 && mejorE < 0.05) { sumaErr += mejorE; n++; }
+    }
+    const err = n > 0 ? sumaErr / n : Infinity;
+    if (err < mejorErr) { mejorErr = err; mejorB = B; }
+  }
+  // refinar f0 con el B elegido: media de f_n / (n·√(1+B·n²))
+  let acum = 0, cnt = 0;
+  for (const p of picos) {
+    let mejorN = 0, mejorE = Infinity;
+    for (let k = 1; k <= 12; k++) {
+      const f = k * f0 * Math.sqrt(1 + mejorB * k * k);
+      const e = Math.abs(p.hz - f) / f;
+      if (e < mejorE) { mejorE = e; mejorN = k; }
+    }
+    if (mejorN >= 1 && mejorE < 0.05) {
+      acum += p.hz / (mejorN * Math.sqrt(1 + mejorB * mejorN * mejorN));
+      cnt++;
+    }
+  }
+  if (cnt > 0) mejorF0 = acum / cnt;
+  return { B: mejorB, f0: mejorF0, errorMedio: mejorErr === Infinity ? null : mejorErr };
+}
+
+// ------------------------------------------------------------ análisis
+
+const cents = (f, ref) => 1200 * Math.log2(f / ref);
+
+/**
+ * Corrección de octava SOLO hacia arriba, y con ventaja clara.
+ * Nunca divide: dividir arruina una lectura correcta.
+ */
+function corregirOctava(picos, f0, ventajaMin = 1.5) {
+  const s0 = soporteArmonico(picos, f0);
+  let mejorF = f0, mejorS = s0;
+  for (const k of [2, 3]) {
+    const obj = f0 * k;
+    // Solo se corrige si EXISTE un pico resuelto cerca del candidato: sin esto,
+    // el peso 1/n hace que el múltiplo alto gane por sí solo.
+    if (!picos.some(p => Math.abs(p.hz - obj) <= obj * 0.03)) continue;
+    const s = soporteArmonico(picos, obj);
+    if (s > mejorS * ventajaMin) { mejorS = s; mejorF = obj; }
+  }
+  return { f0: mejorF, corregida: mejorF !== f0, soporte: mejorS };
+}
+
+/**
+ * Análisis completo de un bloque de muestras.
+ * Devuelve f0, 3 armónicos, 3 parciales inarmónicos y métricas.
+ * TODO sale de la señal.
+ */
+function analizarBloque(x, sr, opciones = {}) {
+  const {
+    nFFT = 16384,
+    fmin = 50,
+    fmax = 1200,
+    promMinDb = 6,
+  } = opciones;
+
+  if (!x || x.length < 1024) return null;
+
+  const N = Math.min(nFFT, 1 << Math.floor(Math.log2(x.length)));
+  if (N < 1024) return null;
+  const bloque = x.slice(0, N);
+  const ventana = ventanaBlackmanHarris(N);
+  const dB = espectroDb(bloque, ventana);
+  const binHz = sr / N;
+
+  const picos = buscarPicos(dB, binHz, fmin, fmax, promMinDb);
+  if (!picos.length) return null;
+
+  // 1) fundamental por periodicidad
+  const y = yin(bloque, sr, fmin, fmax);
+  if (!y.f0) return null;
+
+  // 2) corrección de octava (solo hacia arriba)
+  const oc = corregirOctava(picos, y.f0);
+  let f0 = oc.f0;
+
+  // 3) modelo inarmónico
+  const inh = estimarInarmonicidad(picos, f0);
+  if (inh.f0 && inh.f0 > fmin && inh.f0 < fmax) f0 = inh.f0;
+
+  // 4) armónicos: los 3 más fuertes cerca de 2·f0, 3·f0, 4·f0
+  const armonicos = [];
+  for (let n = 2; n <= 4; n++) {
+    const obj = n * f0;
+    let mejor = null;
+    for (const p of picos) {
+      if (Math.abs(p.hz - obj) <= obj * 0.03) {
+        if (!mejor || p.db > mejor.db) mejor = p;
+      }
+    }
+    if (mejor) {
+      armonicos.push({
+        n, hz: mejor.hz, db: mejor.db,
+        cents: cents(mejor.hz, obj),
+      });
+    }
+  }
+
+  // 5) parciales inarmónicos: los 3 más fuertes que NO caen en n·f0 (±3 %)
+  const esArmonico = (hz) => {
+    for (let n = 1; n <= 12; n++) {
+      if (Math.abs(hz - n * f0) <= n * f0 * 0.03) return true;
+    }
+    return false;
+  };
+  const parciales = picos
+    .filter(p => !esArmonico(p.hz))
+    .sort((a, b) => b.db - a.db)
+    .slice(0, 3)
+    .map(p => ({
+      hz: p.hz, db: p.db, prominencia: p.prominencia,
+      ratio: p.hz / f0,
+      cents: cents(p.hz, f0),
+    }))
+    .sort((a, b) => a.hz - b.hz);
+
+  return {
+    f0,
+    f0Yin: y.f0,
+    claridad: y.claridad,
+    octavaCorregida: oc.corregida,
+    B: inh.B,
+    armonicos,
+    parciales,
+    nPicos: picos.length,
+    binHz,
+    sr,
+  };
+}
+
+/**
+ * Análisis de un buffer COMPLETO (varias ventanas).
+ *
+ * La fundamental sale de la PERIODICIDAD promediada entre ventanas — nunca del
+ * espectro — y NO se deja mover por el modelo inarmónico: ese solo estima B.
+ * Puerta de confianza: sin periodicidad clara no hay lectura (evita inventar
+ * una fundamental en ruido blanco).
+ */
+function analizar(x, sr, opciones = {}) {
+  const {
+    nFFT = 16384,
+    fmin = 50,
+    fmax = 1200,
+    promMinDb = 6,
+    nVentanas = 7,
+    claridadMin = 0.30,
+  } = opciones;
+
+  if (!x || x.length < 2048) return null;
+
+  const N = Math.min(nFFT, 1 << Math.floor(Math.log2(x.length)));
+  if (N < 1024) return null;
+  const ventana = ventanaBlackmanHarris(N);
+  const salto = Math.max(1, Math.floor((x.length - N) / Math.max(1, nVentanas - 1)));
+
+  const f0s = [], claridades = [], espectros = [];
+  for (let k = 0; k < nVentanas; k++) {
+    const ini = Math.min(Math.max(0, x.length - N), k * salto);
+    const bloque = x.slice(ini, ini + N);
+    if (bloque.length < N) break;
+    const y = yin(bloque, sr, fmin, fmax);
+    if (y.f0) { f0s.push(y.f0); claridades.push(y.claridad); }
+    espectros.push(espectroDb(bloque, ventana));
+  }
+  if (!f0s.length || !espectros.length) return null;
+
+  const claridad = mediana(claridades);
+
+  // espectro medio (magnitud) → armónicos y parciales
+  const binHz = sr / N;
+  const mediaDb = new Float64Array(N / 2);
+  for (let i = 0; i < N / 2; i++) {
+    let s = 0;
+    for (const e of espectros) s += Math.pow(10, e[i] / 20);
+    mediaDb[i] = 20 * Math.log10(s / espectros.length + 1e-12);
+  }
+  const picos = buscarPicos(mediaDb, binHz, fmin, fmax, promMinDb);
+
+  const f0Med = mediana(f0s);
+
+  // --- Refinado cruzado PRIMERO: la PERIODICIDAD elige, el ESPECTRO afina ---
+  // Va ANTES de la corrección de octava: un error de ±5 % de YIN podía disparar
+  // la corrección y duplicar la lectura (serie inarmónica: 93,3 → 182,8 Hz).
+  let f0Snap = f0Med;
+  let mejorRel = 0.06;
+  for (const p of picos) {
+    const rel = Math.abs(p.hz - f0Snap) / f0Snap;
+    if (rel <= mejorRel) { mejorRel = rel; f0Snap = p.hz; }
+  }
+
+  const oc = corregirOctava(picos, f0Snap);
+
+  // --- PUERTA DE CONFIANZA ------------------------------------------------
+  // Si la periodicidad es débil y el espectro no sostiene ninguna serie, no hay
+  // fundamental: mejor no leer que inventar (control negativo del banco).
+  const soporte = soporteArmonico(picos, oc.f0);
+  if (claridad == null || claridad < claridadMin || soporte < 8) {
+    return {
+      f0: null,
+      f0Yin: f0Med,
+      claridad,
+      soporte,
+      nPicos: picos.length,
+      binHz,
+      sr,
+      motivo: claridad != null && claridad < claridadMin
+        ? 'periodicidad débil'
+        : 'sin serie armónica sostenida',
+    };
+  }
+
+  const f0 = oc.f0;
+  const inh = estimarInarmonicidad(picos, f0);   // solo B
+
+  // --- armónicos: los 3 más fuertes cerca de 2·f0, 3·f0, 4·f0 ---
+  const armonicos = [];
+  for (let n = 2; n <= 4; n++) {
+    const obj = n * f0;
+    let mejor = null;
+    for (const p of picos) {
+      if (Math.abs(p.hz - obj) <= obj * 0.03) {
+        if (!mejor || p.db > mejor.db) mejor = p;
+      }
+    }
+    if (mejor) armonicos.push({ n, hz: mejor.hz, db: mejor.db, cents: cents(mejor.hz, obj) });
+  }
+
+  // --- parciales inarmónicos: los 3 más fuertes que NO caen en n·f0 ---
+  const esArmonico = (hz) => {
+    for (let n = 1; n <= 12; n++) {
+      if (Math.abs(hz - n * f0) <= n * f0 * 0.03) return true;
+    }
+    return false;
+  };
+  const parciales = picos
+    .filter(p => !esArmonico(p.hz))
+    .sort((a, b) => b.db - a.db)
+    .slice(0, 3)
+    .map(p => ({
+      hz: p.hz, db: p.db, prominencia: p.prominencia,
+      ratio: p.hz / f0, cents: cents(p.hz, f0),
+    }))
+    .sort((a, b) => a.hz - b.hz);
+
+  return {
+    f0,
+    f0Yin: f0Med,
+    claridad,
+    soporte,
+    octavaCorregida: oc.corregida,
+    B: inh.B,
+    armonicos,
+    parciales,
+    nPicos: picos.length,
+    picos,
+    binHz,
+    sr,
+    nVentanas: f0s.length,
+  };
+}
+
+/** Mediana de una lista (repetibilidad entre medidas). */
+function mediana(v) {
+  if (!v.length) return null;
+  const s = v.slice().sort((a, b) => a - b);
+  const m = Math.floor(s.length / 2);
+  return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+}
+
+// ------------------------------------------- binaural espectral (ombak)
+
+/**
+ * Binaural = DOS modos casi degenerados separados ~objetivoHz (banda theta).
+ * Exige que el candidato sea un pico RESUELTO con prominencia real: si no, el
+ * suelo espectral denso produce falsos positivos.
+ */
+function detectarBinaural(picos, f0, objetivoHz = 6.5, opciones = {}) {
+  const { zonaRel = 0.25, promMinDb = 8, tolBandaHz = 1.5 } = opciones;
+  if (!f0) return { estado: 'SIN DATOS' };
+
+  const zMin = f0 * (1 - zonaRel), zMax = f0 * (1 + zonaRel);
+  const zona = picos.filter(p => p.hz >= zMin && p.hz <= zMax);
+  if (!zona.length) return { estado: 'SIN BINAURAL', motivo: 'sin parciales en la zona' };
+
+  const A = zona.slice().sort((a, b) => b.db - a.db)[0];
+  const objetivo = A.hz + objetivoHz;
+  const cand = zona
+    .filter(p => p !== A && p.prominencia >= promMinDb)
+    .map(p => ({ ...p, d: Math.abs(p.hz - objetivo) }))
+    .sort((a, b) => a.d - b.d)[0];
+
+  if (!cand) {
+    return { estado: 'SIN BINAURAL', modoA: A, motivo: 'ningún pico resuelto en la banda' };
+  }
+
+  const sep = Math.abs(cand.hz - A.hz);
+  const enBanda = Math.abs(sep - objetivoHz) <= tolBandaHz;
+  const relDb = cand.db - A.db;
+
+  let estado;
+  if (enBanda && relDb > -40) estado = 'BINAURAL FORMADO';
+  else if (enBanda) estado = 'EN FORMACIÓN';
+  else estado = 'SIN BINAURAL';
+
+  return {
+    estado,
+    modoA: A,
+    modoB: cand,
+    separacionHz: sep,
+    separacionCents: cents(cand.hz, A.hz),
+    objetivoHz,
+    desviacionHz: sep - objetivoHz,
+    relDb,
+    banda: sep < 4 ? 'delta' : sep <= 8 ? 'theta' : 'alfa',
+  };
+}
+
+// -------------------------------------------------------------- exports
+
+const API = {
+  fft, ventanaHann, ventanaBlackmanHarris, espectroDb,
+  interpolarPico, buscarPicos, yin, soporteArmonico, estimarInarmonicidad,
+  corregirOctava, analizarBloque, analizar, mediana, detectarBinaural, cents,
+};
+
+if (typeof module !== 'undefined' && module.exports) module.exports = API;
+if (typeof window !== 'undefined') window.MotorGong = API;
+
+/* ============================ app ============================ */
+const NOMBRES = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
+function nombreNota(f){
+  if(!f) return "—";
+  const midi = Math.round(69 + 12*Math.log2(f/440));
+  const n = NOMBRES[((midi%12)+12)%12];
+  const oct = Math.floor(midi/12) - 1;
+  return n + oct;
+}
+
+const BUF_SEG = 4;                       // ventana circular de 4 s
+let SR = 48000;
+let buf = null, escrito = 0, lleno = false;
+
+let ctx=null, stream=null, nodo=null, activo=false, timer=null;
+let histCents = [];                      // suavizado por mediana
+
+/* Dentro de la WebView de Capacitor no existe getUserMedia: se usa el puente
+   nativo MicBridgePlugin (PCM 44,1 kHz mono por window.__vkgPcm en base64). */
+const ES_CAPACITOR = !!(window.Capacitor && Capacitor.isNativePlatform && Capacitor.isNativePlatform());
+
+function pcmDesdeB64(b64){
+  const bin = atob(b64);
+  const n = bin.length >> 1;
+  const out = new Float32Array(n);
+  for(let i=0;i<n;i++){
+    let v = (bin.charCodeAt(2*i+1) << 8) | bin.charCodeAt(2*i);
+    if(v & 0x8000) v -= 0x10000;
+    out[i] = v/32768;
+  }
+  return out;
+}
+
+function empujar(d){
+  if(!buf) return;
+  for(let i=0;i<d.length;i++){
+    buf[escrito] = d[i];
+    escrito = (escrito+1) % buf.length;
+    if(escrito === 0) lleno = true;
+  }
+}
+
+const $ = (id)=>document.getElementById(id);
+
+function pintaFilas(cont, lista, esArmonico){
+  if(!lista || !lista.length){ cont.innerHTML = '<div class="vacio">Ninguno detectado.</div>'; return; }
+  const maxDb = Math.max(...lista.map(x=>x.db));
+  cont.innerHTML = lista.map(x=>{
+    const id = esArmonico ? ('H'+x.n) : ('×'+x.ratio.toFixed(3));
+    const rel = Math.max(0, Math.min(1, (x.db - (maxDb-30))/30));
+    const c = (x.cents>0?'+':'') + x.cents.toFixed(1) + 'c';
+    return '<div class="fila"><div class="id">'+id+'</div>'+
+      '<div class="barra"><i style="width:'+(rel*100).toFixed(0)+'%"></i></div>'+
+      '<div class="f">'+x.hz.toFixed(1)+' Hz</div>'+
+      '<div class="c">'+c+'</div></div>';
+  }).join('');
+}
+
+function analiza(){
+  const n = lleno ? buf.length : escrito;
+  if(n < SR){ return; }
+  // reconstruir en orden temporal
+  const x = new Float32Array(n);
+  if(lleno){ x.set(buf.subarray(escrito)); x.set(buf.subarray(0,escrito), buf.length-escrito); }
+  else { x.set(buf.subarray(0,escrito)); }
+
+  const r = MotorGong.analizar(x, SR);
+  if(!r){ $('aviso').textContent = 'Sin señal suficiente.'; return; }
+
+  if(r.f0 == null){
+    $('nota').textContent = '—';
+    $('hz').innerHTML = '— <small>Hz</small>';
+    $('cents').textContent = '';
+    $('aviso').textContent = 'No se detecta una fundamental fiable (' + (r.motivo||'') + ').';
+    pintaFilas($('armonicos'), [], true);
+    pintaFilas($('parciales'), [], false);
+    return;
+  }
+
+  histCents.push(r.f0);
+  if(histCents.length > 7) histCents.shift();
+  const f0 = MotorGong.mediana(histCents);
+
+  $('nota').textContent = nombreNota(f0);
+  $('hz').innerHTML = f0.toFixed(2) + ' <small>Hz</small>';
+  const desv = 1200*Math.log2(f0/440);
+  $('cents').textContent = 'A4=440 · desvío ' + (desv>0?'+':'') + desv.toFixed(0) + ' cents · claridad '
+    + (r.claridad*100).toFixed(0) + ' %';
+  $('aviso').textContent = r.octavaCorregida ? 'Octava corregida hacia arriba.' : '';
+
+  pintaFilas($('armonicos'), r.armonicos, true);
+  pintaFilas($('parciales'), r.parciales, false);
+}
+
+async function iniciar(){
+  histCents = []; escrito = 0; lleno = false;
+
+  /* ---- APK Android: puente nativo ---- */
+  if(ES_CAPACITOR){
+    SR = 44100;                          // el puente entrega 44,1 kHz mono
+    buf = new Float32Array(SR*BUF_SEG);
+    window.__vkgPcm = (b64)=>{ empujar(pcmDesdeB64(b64)); };
+    try{
+      await Capacitor.Plugins.MicBridge.start();
+    }catch(e){
+      $('aviso').textContent = 'No se pudo abrir el micrófono: ' + ((e && e.message) || e);
+      return;
+    }
+    activo = true;
+    $('btn').textContent = 'Detener'; $('btn').classList.add('parar');
+    $('estado').textContent = 'grabando 44100 Hz (nativo)';
+    timer = setInterval(analiza, 400);
+    return;
+  }
+
+  /* ---- navegador ---- */
+  SR = 48000;
+  buf = new Float32Array(SR*BUF_SEG);
+  try{
+    stream = await navigator.mediaDevices.getUserMedia({audio:{
+      echoCancellation:false, noiseSuppression:false, autoGainControl:false,
+      channelCount:1, sampleRate:SR
+    }});
+  }catch(e){ $('aviso').textContent = 'No se pudo abrir el micrófono: ' + e.message; return; }
+  ctx = new (window.AudioContext||window.webkitAudioContext)({sampleRate:SR});
+  await ctx.resume();
+  nodo = ctx.createMediaStreamSource(stream);
+  const proc = ctx.createScriptProcessor(4096,1,1);
+  proc.onaudioprocess = (ev)=>{ empujar(ev.inputBuffer.getChannelData(0)); };
+  nodo.connect(proc); proc.connect(ctx.destination);
+  activo = true;
+  $('btn').textContent = 'Detener'; $('btn').classList.add('parar');
+  $('estado').textContent = 'grabando ' + ctx.sampleRate + ' Hz';
+  timer = setInterval(analiza, 400);
+}
+
+function parar(){
+  activo = false;
+  if(timer){ clearInterval(timer); timer=null; }
+  if(ES_CAPACITOR){
+    try{ Capacitor.Plugins.MicBridge.stop(); }catch(e){}
+    window.__vkgPcm = null;
+  }
+  if(stream){ stream.getTracks().forEach(t=>t.stop()); stream=null; }
+  if(ctx){ ctx.close(); ctx=null; }
+  $('btn').textContent = 'Iniciar'; $('btn').classList.remove('parar');
+  $('estado').textContent = 'detenido';
+}
+
+$('btn').addEventListener('click', ()=>{ activo ? parar() : iniciar(); });
+</script>
+</body>
+</html>
