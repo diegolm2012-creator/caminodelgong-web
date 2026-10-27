@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Sitemap: /sitemap.xml
+
+User-agent: Googlebot
+Disallow: /wp-admin/
+Disallow: /wp-includes/
