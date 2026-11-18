@@ -48,6 +48,10 @@ caminodelgong-web-restore/
 ├── seo.jsonld                    → Datos estructurados
 ├── sitemap.xml                   → 13 URLs
 ├── ARCHITECTURE.md               → Este documento
+├── scripts/
+│   └── bump_assets.py           → Versiona ?v= de CSS/JS a partir del hash
+├── .githooks/
+│   └── pre-commit               → Auto-bump de ?v= antes de cada commit
 ├── README.md                     → Resumen del proyecto
 │
 ├── css/
@@ -111,7 +115,9 @@ caminodelgong-web-restore/
 3. Estructura multi-página con subcarpetas implementada.
 4. Recursos compartidos: `css/style.css` + `assets/js/main.js` (único CSS y JS).
 5. Verificación local: todas las URLs responden 200.
-6. Commit en `main` → despliegue Cloudflare Pages automático.
+6. `python scripts/bump_assets.py` (o el gancho pre-commit, que lo hace solo)
+   para que `?v=` de los assets se derive del hash del archivo.
+7. Commit en `main` → despliegue Cloudflare Pages automático.
 
 ## 7. Mantenimiento
 
@@ -121,6 +127,28 @@ caminodelgong-web-restore/
 - Verificación local antes de commit: `python -m http.server` + comprobación
   de que todas las URLs responden 200.
 - Registro de cambios (logs) en la bitácora del repositorio.
+
+### Cache y versionado de assets
+
+Cloudflare Pages sirve `css/style.css` y `assets/js/main.js` con
+`Cache-Control: public, max-age=14400, must-revalidate` (4 h). Para que un
+cambio se vea de inmediato, ambos assets se enlazan con un parámetro `?v=`
+que cambia al cambiar el archivo:
+
+- **Token**: 12 primeros hex del SHA-256 del contenido del asset normalizado a
+  LF (el repo está en CRLF; Pages sirve LF). Así coincide con los bytes servidos.
+- **`scripts/bump_assets.py`** reescribe `?v=` en todos los HTML del sitio:
+  - `python scripts/bump_assets.py` — aplica el bump y muestra resumen.
+  - `python scripts/bump_assets.py --check` — verifica sin escribir (exit 1 si
+    hay versiones desactualizadas).
+  - `python scripts/bump_assets.py --name-only` — imprime solo las rutas tocadas.
+- **Gancho pre-commit** (auto-bump): `./.githooks/pre-commit`. Se instala con
+  `git config core.hooksPath .githooks`; antes de cada commit re-deriva los
+  tokens y re-encola los HTML tocados. Si no encuentra python, solo avisa.
+- **Regla**: cada release que toque `css/style.css` o `assets/js/main.js` debe
+  ejecutar el bump (o confiar en el gancho) antes de commitear/pushear.
+  `eltemplo_web/` queda fuera del sitio principal y no se versiona con este
+  script.
 
 ## 8. Restricciones
 

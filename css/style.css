@@ -1139,7 +1139,7 @@ footer {
 /* ═══════════════════════════════════════════════════════════════════
    PORTADA MÍNIMA — solo el vídeo, a pantalla completa.
    ═══════════════════════════════════════════════════════════════════ */
-html,body{margin:0;padding:0;background:#000}
+html:has(#portada-video),body:has(#portada-video){margin:0;padding:0;background:#000}
 #portada-video{
   position:fixed;inset:0;width:100vw;height:100vh;
   object-fit:cover;display:block;background:#000;

@@ -1,0 +1,31 @@
+#!/bin/sh
+# Pre-commit: versiona ?v= de css/style.css y assets/js/main.js a partir del
+# hash del archivo antes de cada commit, y re-encola los HTML tocados.
+#
+# Instala (una sola vez, por repo):
+#     git config core.hooksPath .githooks
+#
+# El hook no bloquea el commit si no encuentra python: solo avisa.
+set -e
+root=$(git rev-parse --show-toplevel)
+
+py=""
+for c in python3 python py; do
+  if command -v "$c" >/dev/null 2>&1; then py="$c"; break; fi
+done
+if [ -z "$py" ]; then
+  echo "pre-commit: no se encontro python; no se versionaron los assets" >&2
+  exit 0
+fi
+
+if ! changed=$("$py" "$root/scripts/bump_assets.py" --name-only --root "$root"); then
+  echo "pre-commit: bump_assets.py fallo; commit detenido" >&2
+  exit 1
+fi
+
+if [ -n "$changed" ]; then
+  echo "$changed" | while IFS= read -r f; do
+    [ -n "$f" ] && git add -- "$f"
+  done
+  echo "pre-commit: ?v= de assets actualizado y re-encolado" >&2
+fi

@@ -1,0 +1,12 @@
+# ── Seguridad: credenciales y tokens locales ─────────────────────────────
+# upload_token.json contiene un JWT de Cloudflare Pages. Nunca versionar.
+upload_token.json
+
+# ── Artefactos locales de desarrollo (no versionar) ──────────────────────
+server.log
+cam.html
+www.html
+
+# ── Borradores superados ─────────────────────────────────────────────────
+# El fuente canónico del Worker es eltemplo_web/worker.mjs (v4).
+Worker.js

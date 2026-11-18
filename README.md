@@ -46,6 +46,11 @@ Cada push a `main` despliega automáticamente en Cloudflare Pages:
 
 El dominio `caminodelgong.com` apunta a Cloudflare (configurado en `CNAME`).
 
+Antes de commitear, ejecuta `python scripts/bump_assets.py` (o instala el
+gancho una vez con `git config core.hooksPath .githooks`) para que el `?v=`
+de `css/style.css` y `assets/js/main.js` se derive del hash del archivo y el
+cambio se vea de inmediato pese al `max-age=14400`.
+
 ## Créditos
 
 &copy; 2026 El Templo del Gong — Diego Montenegro
