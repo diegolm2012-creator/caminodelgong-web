@@ -11,12 +11,76 @@
   <meta property="og:type" content="website">
   <link rel="canonical" href="https://caminodelgong.com/">
   <link rel="stylesheet" href="css/style.css?v=7a3387a8422e">
+  <style>
+    /* Portada: menú sobre el vídeo + acceso directo a las herramientas */
+    #portada-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 90; }
+    #portada-nav .nav-brand-symbol { color: #c9a84c; }
+
+    #portada-cta {
+      position: fixed;
+      left: 50%;
+      bottom: 1.6rem;
+      transform: translateX(-50%);
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      padding: .6rem .9rem;
+      border-radius: 999px;
+      background: rgba(10, 10, 11, .58);
+      border: 1px solid rgba(201, 168, 76, .3);
+      -webkit-backdrop-filter: blur(10px) saturate(1.1);
+      backdrop-filter: blur(10px) saturate(1.1);
+      max-width: calc(100vw - 2rem);
+    }
+    #portada-cta .portada-cta-label {
+      font-size: .72rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(214, 205, 186, .75);
+      margin-right: .2rem;
+      white-space: nowrap;
+    }
+    #portada-cta .btn { font-size: .85rem; padding: .5rem 1.05rem; }
+
+    @media (max-width: 720px) {
+      #portada-cta {
+        flex-wrap: wrap;
+        justify-content: center;
+        width: calc(100% - 1.6rem);
+        border-radius: 12px;
+        bottom: 5rem;
+        gap: .45rem;
+      }
+      #portada-cta .portada-cta-label { width: 100%; text-align: center; margin: 0 0 .1rem 0; }
+      #portada-cta .btn { flex: 1 1 45%; text-align: center; }
+    }
+  </style>
 </head>
 <body data-brand="templo">
   <video id="portada-video" autoplay muted loop playsinline poster="/camino/tantra/poster.jpg">
     <source src="/camino/tantra/tantragong-noetico.mp4" type="video/mp4">
     Tu navegador no soporta la reproducción de vídeo.
   </video>
+  <nav id="portada-nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand"><span class="nav-brand-symbol">◯</span> El Templo del Gong</a>
+      <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">☰</button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="/camino/">Camino del Gong</a></li>
+        <li><a href="/taller/">Vikingong</a></li>
+        <li><a href="/maitreyia/">MaitreyIA</a></li>
+        <li><a href="/contacto/">Contacto</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div id="portada-cta">
+    <span class="portada-cta-label">Análisis de sonido</span>
+    <a class="btn btn-primary" href="/maitreyia/afinador/">Afinador de gong</a>
+    <a class="btn btn-secondary" href="/maitreyia/binaural/">Analizador binaural</a>
+  </div>
+
   <button id="unmute-btn" aria-label="Activar el sonido">◯</button>
   <script src="assets/js/main.js?v=7f47c08d07c4"></script>
 </body>
